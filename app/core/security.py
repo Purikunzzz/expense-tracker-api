@@ -3,7 +3,10 @@ from jose import jwt, JWTError
 from datetime import datetime, timedelta, timezone
 from app.core.config import settings
 
-pwd_context = CryptContext(schemes=["bcrypt"])
+pwd_context = CryptContext(schemes=["bcrypt"],
+                            bcrypt__rounds=12,
+                            truncate_error=False
+                            )
 
 def hash_password(password: str) -> str:
     return pwd_context.hash(password)
