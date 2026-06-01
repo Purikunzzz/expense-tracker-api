@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.security import HTTPBearer
 from app.routers import auth
 
 app = FastAPI(

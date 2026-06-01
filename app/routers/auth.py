@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from app.dependencies import get_db
+from app.dependencies import get_db, get_current_user
 from app.services.auth import register_user, authenticate_user
 from app.schemas.user import UserCreate, UserResponse, UserLogin, Token
 from app.core.security import create_access_token
@@ -24,3 +24,7 @@ async def login(data: UserLogin, db = Depends(get_db)):
         raise HTTPException(401, detail=str(e))
     
     return Token(access_token=token, token_type="bearer")
+
+@router.get("/me", response_model=UserResponse)
+async def get_me(current_user = Depends(get_current_user)):
+    return current_user
