@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.security import HTTPBearer
-from app.routers import auth
+from app.routers import auth, categories
 
 app = FastAPI(
     title="Expense Tracker API",
@@ -8,6 +8,8 @@ app = FastAPI(
 )
 
 app.include_router(auth.router)
+app.include_router(categories.router)
+
 
 @app.get("/health")
 async def health():
