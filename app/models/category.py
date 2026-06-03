@@ -12,5 +12,6 @@ class Category(Base):
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     created_at = Column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
 
-    user = relationship("User", back_populates="categories")
+    user = relationship("User", back_populates="category")
+    expenses = relationship("Expense", back_populates="category")
 
