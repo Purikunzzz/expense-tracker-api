@@ -4,14 +4,17 @@ from app.routers import auth, categories, expenses, summary
 from contextlib import asynccontextmanager
 from alembic.config import Config
 from alembic import command
+import asyncio
+
+def run_migrations():
+    alembic_cfg = Config("alembic.ini")
+    command.upgrade(alembic_cfg, "head")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # startup
-    alembic_cfg = Config("alembic.ini")
-    command.upgrade(alembic_cfg, "head")
+    loop = asyncio.get_event_loop()
+    await loop.run_in_executor(None, run_migrations)
     yield
-    # shutdown
 
 
 
