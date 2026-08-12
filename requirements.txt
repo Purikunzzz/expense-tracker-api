@@ -14,7 +14,7 @@ pydantic-settings==2.2.1
 
 # Auth
 python-jose[cryptography]==3.3.0   # JWT
-passlib[bcrypt]==1.7.4             # Password hashing
+passlib[bcrypt]==4.0.1             # Password hashing
 
 # Utilities
 python-multipart==0.0.9  # For form data (login form support)
