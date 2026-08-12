@@ -1,10 +1,24 @@
 from fastapi import FastAPI
 from fastapi.security import HTTPBearer
 from app.routers import auth, categories, expenses, summary
+from contextlib import asynccontextmanager
+from alembic.config import Config
+from alembic import command
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # startup
+    alembic_cfg = Config("alembic.ini")
+    command.upgrade(alembic_cfg, "head")
+    yield
+    # shutdown
+
+
 
 app = FastAPI(
     title="Expense Tracker API",
-    version="0.1.0"
+    version="0.1.0",
+    lifespan=lifespan
 )
 
 app.include_router(auth.router)
