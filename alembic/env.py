@@ -56,31 +56,22 @@ def run_migrations_offline() -> None:
 
 
 def run_migrations_online() -> None:
-    """Run migrations in 'online' mode.
-
-    In this scenario we need to create an Engine
-    and associate a connection with the context.
-
-    """
-    connectable = async_engine_from_config(
-        config.get_section(config.config_ini_section, {}),
-        prefix="sqlalchemy.",
-        poolclass=pool.NullPool,
+    from sqlalchemy import create_engine
+    import os
+    
+    url = os.environ.get("DATABASE_URL", "").replace(
+        "postgresql+asyncpg://", "postgresql://"
     )
+    
+    connectable = create_engine(url, poolclass=pool.NullPool)
 
-    async def do_run_migrations():
-        async with connectable.connect() as connection:
-            await connection.run_sync(do_migrations)
-
-    def do_migrations(connection):
+    with connectable.connect() as connection:
         context.configure(
             connection=connection,
             target_metadata=target_metadata
         )
         with context.begin_transaction():
             context.run_migrations()
-
-    asyncio.run(do_run_migrations())
 
 if context.is_offline_mode():
     run_migrations_offline()
