@@ -11,7 +11,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000",
-        "https://expense-tracker-frontend.vercel.app"
+        "https://expense-tracker-frontend-pink-one.vercel.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
