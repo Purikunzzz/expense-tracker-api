@@ -12,7 +12,7 @@ class CategoryUpdate(BaseModel):
 class CategoryResponse(BaseModel):
     id: int
     name: str
-    description: str
+    description: str | None = None
     user_id: int
     created_at: datetime
 
