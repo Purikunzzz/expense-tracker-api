@@ -4,7 +4,7 @@ from app.dependencies import get_db, get_current_user
 from app.schemas.expense import ExpenseCreate, ExpenseResponse, ExpenseUpdate
 from app.services.expense import get_expense, get_expenses, create_expense, update_expense, delete_expense
 
-router = APIRouter(prefix="/expense", tags=["expense"])
+router = APIRouter(prefix="/expenses", tags=["expense"])
 
 @router.get("/", response_model=list[ExpenseResponse], status_code=200)
 async def get_all_expenses(db: AsyncSession = Depends(get_db), current_user = Depends(get_current_user)):
